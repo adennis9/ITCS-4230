@@ -94,9 +94,11 @@ public class Player : MonoBehaviour, ITakeDamage
 
         if (PlayerHitSound != null)
             AudioSource.PlayClipAtPoint(PlayerHitSound, transform.position);
-        FloatingText.Show(string.Format("-{0}!", damage), "DamageText", new FromWorldPointTextPositioner(Camera.main, transform.position, DamageTextLifeSpan, DamageTextSpeed));
+		if (damage != 0)
+			FloatingText.Show(string.Format("-{0}!", damage), "DamageText", new FromWorldPointTextPositioner(Camera.main, transform.position, DamageTextLifeSpan, DamageTextSpeed));
 
-        Instantiate(OuchEffect, transform.position, transform.rotation);
+		if (OuchEffect != null)
+			Instantiate(OuchEffect, transform.position, transform.rotation);
         Health -= damage;
 
         if (Health <= 0)

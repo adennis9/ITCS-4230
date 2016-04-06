@@ -31,7 +31,8 @@ public class SimpleProjectile : Projectile, ITakeDamage
             if (projectile != null && projectile.Owner.GetComponent<Player>() != null)
             {
                 GameManager.Instance.AddPoints(PointsToGiveToPlayer);
-                FloatingText.Show(string.Format("+{0}!", PointsToGiveToPlayer), "PointStarText", new FromWorldPointTextPositioner(Camera.main, transform.position, 1.5f, 50));
+				if (PointsToGiveToPlayer != 0)
+					FloatingText.Show(string.Format("+{0}!", PointsToGiveToPlayer), "PointStarText", new FromWorldPointTextPositioner(Camera.main, transform.position, 1.5f, 50));
             }
         }
 

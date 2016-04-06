@@ -58,7 +58,8 @@ public class SimpleEnemyAI : MonoBehaviour, ITakeDamage, IPlayerRespawnListener
             if (projectile != null && owner != null)
             {
                 GameManager.Instance.AddPoints(PointsToGivePlayer);
-                FloatingText.Show(string.Format("+{0}!", PointsToGivePlayer), "PointStarText", new FromWorldPointTextPositioner(Camera.main, transform.position, 1.5f, 50));
+				if (PointsToGivePlayer != 0)
+					FloatingText.Show(string.Format("+{0}!", PointsToGivePlayer), "PointStarText", new FromWorldPointTextPositioner(Camera.main, transform.position, 1.5f, 50));
             }
         }
 
