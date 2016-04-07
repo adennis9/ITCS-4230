@@ -81,6 +81,7 @@
      <Compile Include="Assets\Code\PathedProjectileSpawner.cs" />
      <Compile Include="Assets\Code\Player.cs" />
      <Compile Include="Assets\Code\PlayerBounds.cs" />
+     <Compile Include="Assets\Code\PlayerScoreList.cs" />
      <Compile Include="Assets\Code\PointStar.cs" />
      <Compile Include="Assets\Code\PowerUps.cs" />
      <Compile Include="Assets\Code\Projectile.cs" />
