@@ -12,16 +12,16 @@ public class LevelManager : MonoBehaviour
 
     public Player Player { get; private set; }
     public CameraController Camera { get; private set; }
-    public TimeSpan RunningTime { get { return DateTime.UtcNow - _started; } }
+    //public TimeSpan RunningTime { get { return DateTime.UtcNow - _started; } }
 
-    public int CurrentTimeBonus
-    {
-        get
-        {
-            var secondDifference = (int)(BonusCutoffSeconds - RunningTime.TotalSeconds);
-            return Mathf.Max(0, secondDifference) * BonusSecondsMultiplier;
-        }
-    }
+    //public int CurrentTimeBonus
+    //{
+       // get
+        //{
+            //var secondDifference = (int)(BonusCutoffSeconds - RunningTime.TotalSeconds);
+           // return Mathf.Max(0, secondDifference) * BonusSecondsMultiplier;
+        //}
+   // }
 
     private List<Checkpoint> _checkpoints;
     private int _currentCheckpointIndex;
@@ -29,14 +29,16 @@ public class LevelManager : MonoBehaviour
     private int _savedPoints;
 
     public Checkpoint DebugSpawn;
-    public int BonusCutoffSeconds;
-    public int BonusSecondsMultiplier;
+    //public int BonusCutoffSeconds;
+    //public int BonusSecondsMultiplier;
+	private int _scoreMultiplier = 1;
 
 
     public void Awake()
     {
         _savedPoints = GameManager.Instance.Points;
         Instance = this;
+		DontDestroyOnLoad (transform.gameObject);
     }
 
     public void Start()
@@ -88,9 +90,9 @@ public class LevelManager : MonoBehaviour
         _currentCheckpointIndex++;
         _checkpoints[_currentCheckpointIndex].PlayerHitCheckpoint();
 
-        GameManager.Instance.AddPoints(CurrentTimeBonus);
+        //GameManager.Instance.AddPoints(CurrentTimeBonus);
         _savedPoints = GameManager.Instance.Points;
-        _started = DateTime.UtcNow;
+        //_started = DateTime.UtcNow;
 
     }
 
@@ -102,8 +104,8 @@ public class LevelManager : MonoBehaviour
     private IEnumerator GoToNextLevelCo(string levelName)
     {
         Player.FinishLevel();
-        GameManager.Instance.AddPoints(CurrentTimeBonus);
-        FloatingText.Show("Galaxy Saved!", "CheckpointText", new CenteredTextPositioner(.25f));
+        //GameManager.Instance.AddPoints(CurrentTimeBonus);
+        //FloatingText.Show("Galaxy Saved!", "CheckpointText", new CenteredTextPositioner(.25f));
         yield return new WaitForSeconds(2f);
 
         if (string.IsNullOrEmpty(levelName))
@@ -128,8 +130,8 @@ public class LevelManager : MonoBehaviour
         if (_currentCheckpointIndex != -1)
             _checkpoints[_currentCheckpointIndex].SpawnPlayer(Player);
 
-        _started = DateTime.UtcNow;
-        GameManager.Instance.ResetPoints(_savedPoints);
+        //_started = DateTime.UtcNow;
+        //GameManager.Instance.ResetPoints(_savedPoints);
 
     }
 }

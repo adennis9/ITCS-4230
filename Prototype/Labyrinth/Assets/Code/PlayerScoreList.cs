@@ -19,8 +19,8 @@ public class PlayerScoreList : MonoBehaviour
 	{
 
 
-		if (scoreManager.getChangeCounter() == lastChangeCounter)
-			return;
+		//if (scoreManager.getChangeCounter() == lastChangeCounter)
+			//return;
 		
 		while (this.transform.childCount > 0) 
 		{

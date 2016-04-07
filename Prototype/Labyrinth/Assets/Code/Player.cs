@@ -72,6 +72,7 @@ public class Player : MonoBehaviour, ITakeDamage
 
         _controller.SetForce(new Vector2(0, 20));
         Health = 0;
+		GameManager.Instance.resetMultiplier ();
     }
 
     public void RespawnAt(Transform spawnPoint)

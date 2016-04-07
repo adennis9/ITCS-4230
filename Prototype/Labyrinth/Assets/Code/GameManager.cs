@@ -12,6 +12,7 @@ public class GameManager
 
     public int Points { get; private set; }
 
+	private int _scoreMultiplier = 1;
     private GameManager()
     {
     }
@@ -30,4 +31,18 @@ public class GameManager
     {
         Points += pointsToAdd;
     }
+	public void increaseMultiplier()
+	{
+		_scoreMultiplier++;
+	}
+
+	public int getMultiplier()
+	{
+		return _scoreMultiplier;
+	}
+
+	public void resetMultiplier()
+	{
+		_scoreMultiplier = 1;
+	}
 }

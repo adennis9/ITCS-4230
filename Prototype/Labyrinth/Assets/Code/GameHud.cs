@@ -19,12 +19,12 @@ using UnityEngine;
             {
                 GUILayout.Label(string.Format("Points: {0}", GameManager.Instance.Points), Skin.GetStyle("PointsText"));
 
-                var time = LevelManager.Instance.RunningTime;
-                GUILayout.Label(string.Format(
-                    "{0:00}:{1:00} with {2} bonus", 
-                    time.Minutes + (time.Hours * 60), 
-                    time.Seconds,
-                    LevelManager.Instance.CurrentTimeBonus), Skin.GetStyle("TimeText"));
+                //var time = LevelManager.Instance.RunningTime;
+                //GUILayout.Label(string.Format(
+                    //"{0:00}:{1:00} with {2} bonus", 
+                    //time.Minutes + (time.Hours * 60), 
+                    //time.Seconds,
+                    //LevelManager.Instance.CurrentTimeBonus), Skin.GetStyle("TimeText"));
             }
             GUILayout.EndVertical();
         }

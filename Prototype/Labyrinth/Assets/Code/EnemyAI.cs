@@ -2,29 +2,45 @@
 using System.Collections;
 using Pathfinding;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, ITakeDamage
 {
 
-    public float Speed;
+    public float Speed = 5f;
 	public float TimeToWait = .5f;
-	public float FireRate = 1f;
-	public float FireWait = 1f;
-	public Projectile Projectile;
 	public float EnemySight = 10;
+	public int PointsToGivePlayer = 1000;
+	public int HitsToKill = 3;
+	public enum weakness
+	{
+		Waterball,
+		Fireball,
+		Tornado,
+		Earthfist
+
+	}
+	//public float FireRate = 1f;
+	//public float FireWait = 1f;
+	public weakness WeakAgainst;
+	public Projectile Projectile;
+	public GameObject DestroyedEffect;
+	public AudioClip DestroySound;
+
 
 
     private CharacterController2D _controller;
     private Vector2 _direction;
-    private float _wait = .5f;
+	private float _wait = .5f;
 	private float _fire;
-    public void Start()
+    
+
+	public void Start()
     {
         _controller = GetComponent<CharacterController2D>();
         _direction = new Vector2(-1, 0);
+		//Debug.Log (WeakAgainst + "(Clone)");
 
 
     }
-
     public void Update()
     {
         var rayCast = Physics2D.Raycast(transform.position, _direction, EnemySight, 1 << LayerMask.NameToLayer("player"));
@@ -62,6 +78,38 @@ public class EnemyAI : MonoBehaviour
 
 
      }
+	public void TakeDamage(int damage, GameObject instigator)
+	{
+		var projectile = instigator.GetComponent<Projectile>();
+		var owner = projectile.Owner.GetComponent<Player>();
+
+		if (projectile.name != WeakAgainst + "(Clone)")
+			return;
+
+
+		if (PointsToGivePlayer != 0)
+		{
+			if (projectile != null && owner != null)
+			{
+				HitsToKill--;
+				if (HitsToKill > 0)
+					return;
+				GameManager.Instance.AddPoints(PointsToGivePlayer * (GameManager.Instance.getMultiplier()));
+				if (PointsToGivePlayer != 0)
+					FloatingText.Show(string.Format("+{0}!", (PointsToGivePlayer * GameManager.Instance.getMultiplier())), "PointStarText", new FromWorldPointTextPositioner(Camera.main, transform.position, 1.5f, 50));
+
+				if (DestroyedEffect != null)
+					Instantiate(DestroyedEffect, transform.position, transform.rotation);
+				if (DestroySound != null)
+					AudioSource.PlayClipAtPoint(DestroySound, transform.position);
+				gameObject.SetActive(false);
+				GameManager.Instance.increaseMultiplier ();
+				Debug.Log ("Total Points: " + GameManager.Instance.Points);
+			
+			}
+		}
+
+	}
 
 	IEnumerator Shoot()
 	{
