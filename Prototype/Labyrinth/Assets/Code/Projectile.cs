@@ -17,7 +17,6 @@ public abstract class Projectile : MonoBehaviour
         Owner = owner;
         Direction = direction;
         InitialVelocity = initialVelocity;
-        OnInitialized();
     }
 
 

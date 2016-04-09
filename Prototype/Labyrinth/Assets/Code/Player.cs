@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, ITakeDamage
     public float DamageTextLifeSpan = 1.5f;
     public float DamageTextSpeed = 50;
     public int MaxHealth = 100;
+	public int Lives = 3;
     public GameObject OuchEffect;
     public Projectile Projectile;
     public float FireRate;
@@ -27,17 +28,20 @@ public class Player : MonoBehaviour, ITakeDamage
     public int Health { get; private set; }
     public bool IsDead { get; private set; }
     public Projectile CurrentProjectile { get; set; }
-    private float _canFireIn;
-
+	public bool IsGameOver { get; private set; }
+	private float _canFireIn;
+	private ScoreManager _scoreManager;
     public void Awake()
     {
         _controller = GetComponent < CharacterController2D>();
         _isFacingRight = transform.localScale.x > 0;
         Health = MaxHealth;
         CurrentProjectile = Projectile;
+		IsGameOver = false;
 
     }
-
+	//TODO: REMOVE DAMAGE TEXT PER HIT
+	//TODO: ADD LIVES MAYBE IN LEVEL MANAGER?
     public void Update()
      {
         _canFireIn -= Time.deltaTime;
@@ -72,12 +76,25 @@ public class Player : MonoBehaviour, ITakeDamage
 
         _controller.SetForce(new Vector2(0, 20));
         Health = 0;
-		GameManager.Instance.resetMultiplier ();
+
+
+		Lives--;
+		if (Lives <= 0) 
+		{
+			//Debug.Log ("GameOver");
+			IsGameOver = true;
+			LevelManager.Instance.GameOver ();
+		}
+			
     }
+
+
 
     public void RespawnAt(Transform spawnPoint)
     {
-        if (!_isFacingRight)
+		if (IsGameOver)
+			return;
+		if (!_isFacingRight)
             Flip();
 
         IsDead = false;
@@ -93,7 +110,8 @@ public class Player : MonoBehaviour, ITakeDamage
     public void TakeDamage(int damage, GameObject instigator)
     {
 
-        if (PlayerHitSound != null)
+        
+		if (PlayerHitSound != null)
             AudioSource.PlayClipAtPoint(PlayerHitSound, transform.position);
 		if (damage != 0)
 			FloatingText.Show(string.Format("-{0}!", damage), "DamageText", new FromWorldPointTextPositioner(Camera.main, transform.position, DamageTextLifeSpan, DamageTextSpeed));
@@ -101,6 +119,7 @@ public class Player : MonoBehaviour, ITakeDamage
 		if (OuchEffect != null)
 			Instantiate(OuchEffect, transform.position, transform.rotation);
         Health -= damage;
+		GameManager.Instance.resetMultiplier ();
 
         if (Health <= 0)
             LevelManager.Instance.KillPlayer();
@@ -183,6 +202,7 @@ public class Player : MonoBehaviour, ITakeDamage
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         _isFacingRight = transform.localScale.x > 0;
     }
+
 
 
 }

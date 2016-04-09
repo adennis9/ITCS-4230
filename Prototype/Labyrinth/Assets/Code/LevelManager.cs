@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
     //public int BonusCutoffSeconds;
     //public int BonusSecondsMultiplier;
 	private int _scoreMultiplier = 1;
-
+	string initials = "Enter Initials";
 
     public void Awake()
     {
@@ -123,7 +123,7 @@ public class LevelManager : MonoBehaviour
     {
         Player.Kill();
         Camera.IsFollowing = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
 
         Camera.IsFollowing = true;
 
@@ -134,4 +134,54 @@ public class LevelManager : MonoBehaviour
         //GameManager.Instance.ResetPoints(_savedPoints);
 
     }
+
+	public void GameOver()
+	{
+
+		StartCoroutine (GameOverCo ());
+	}
+
+	private IEnumerator GameOverCo()
+	{
+
+		var scoreManager = GameObject.FindObjectOfType<ScoreManager> ();
+
+		int points = GameManager.Instance.Points;
+
+
+		Debug.Log ("Game Over");
+		Debug.Log ("points = " + points);
+		//Debug.Log (scoreManager == null);
+		Debug.Log (scoreManager.checkScore(points));
+
+		if (scoreManager.checkScore (points)) 
+		{
+			scoreManager.setScore (initials, points);
+		}
+		yield return new WaitForSeconds (2f);	
+		SceneManager.LoadScene ("ScoreBoard");
+	}
+
+	private void OnGUI()
+	{
+		var scoreManager = GameObject.FindObjectOfType<ScoreManager> ();
+		int points = GameManager.Instance.Points;
+
+		if (scoreManager.checkScore (points) && Player.IsGameOver) 
+		{
+		
+			Time.timeScale = 0;
+			initials = GUI.TextField(new Rect(10, 10, 200, 20), initials, 25);
+
+			if (Input.GetKeyDown (KeyCode.Return)) 
+			{
+				Time.timeScale = 1;
+				return;
+			}
+		}
+			
+
+			
+	}
+		
 }

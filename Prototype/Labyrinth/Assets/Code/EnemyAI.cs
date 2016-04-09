@@ -22,6 +22,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
 	//public float FireWait = 1f;
 	public weakness WeakAgainst;
 	public Projectile Projectile;
+	public Projectile WeaponToGive;
 	public GameObject DestroyedEffect;
 	public AudioClip DestroySound;
 
@@ -44,8 +45,8 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
     public void Update()
     {
         var rayCast = Physics2D.Raycast(transform.position, _direction, EnemySight, 1 << LayerMask.NameToLayer("player"));
-
-        if ((_direction.x < 0 && _controller.State.IsCollidingLeft) || (_direction.x > 0 && _controller.State.IsCollidingRight))
+		var behindRayCast = Physics2D.Raycast(transform.position, -_direction, (EnemySight / 2), 1 << LayerMask.NameToLayer("player"));
+		if ((_direction.x < 0 && _controller.State.IsCollidingLeft) || (_direction.x > 0 && _controller.State.IsCollidingRight) || behindRayCast)
         {
             _direction = -_direction;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -105,6 +106,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
 				gameObject.SetActive(false);
 				GameManager.Instance.increaseMultiplier ();
 				Debug.Log ("Total Points: " + GameManager.Instance.Points);
+				owner.changeProjectile (WeaponToGive);
 			
 			}
 		}

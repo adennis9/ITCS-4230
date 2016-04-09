@@ -54,9 +54,11 @@
      <Compile Include="Assets\Code\ControllerParameters2D.cs" />
      <Compile Include="Assets\Code\ControllerPhysicsVolume2D.cs" />
      <Compile Include="Assets\Code\ControllerState2D.cs" />
+     <Compile Include="Assets\Code\EarthAI.cs" />
      <Compile Include="Assets\Code\EndScreen.cs" />
      <Compile Include="Assets\Code\EnemyAI.cs" />
      <Compile Include="Assets\Code\FinishLevel.cs" />
+     <Compile Include="Assets\Code\FireAI.cs" />
      <Compile Include="Assets\Code\FloatingText.cs" />
      <Compile Include="Assets\Code\FollowObject.cs" />
      <Compile Include="Assets\Code\FollowPath.cs" />
@@ -91,6 +93,8 @@
      <Compile Include="Assets\Code\SimpleProjectile.cs" />
      <Compile Include="Assets\Code\SortParticleSystem.cs" />
      <Compile Include="Assets\Code\StartScreen.cs" />
+     <Compile Include="Assets\Code\TextEntry.cs" />
+     <Compile Include="Assets\Code\TornadoAI.cs" />
      <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh.shader" />
      <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\DotNetZipLicense.txt" />
      <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Multiply.shader" />

@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ScoreManager : MonoBehaviour 
+public class ScoreManager : MonoBehaviour
 {
+
 	private Dictionary<string, int> scoreBoard;
+
 	int changeCounter = 0;
 	public void Start()
 	{
@@ -13,7 +15,8 @@ public class ScoreManager : MonoBehaviour
 		setScore ("CRF", 10000);
 		setScore ("AAA", 8000);
 		setScore ("BBB", 8001);
-		setScore ("CCC", 9000);
+		setScore ("CCC", 100);
+		DontDestroyOnLoad (transform.gameObject);
 
 		//Debug.Log (getScore("xer096"));
 	}
@@ -45,6 +48,8 @@ public class ScoreManager : MonoBehaviour
 			scoreBoard.Add(userName, score);
 		else 
 			scoreBoard [userName] = score;
+
+		Debug.Log ("Score set Name: " + userName + " Score: " + score);
 	}
 
 	public string[] getPlayerNames()
@@ -59,5 +64,17 @@ public class ScoreManager : MonoBehaviour
 		return changeCounter;
 	}
 
+	public bool checkScore(int points)
+	{
+		init ();
+		var isGreater = false;
+		string[] names = getPlayerNames ();
+		foreach (string name in names) 
+		{
+			isGreater = getScore (name) < points;
+		}
+
+		return isGreater;
+	}
 
 }
