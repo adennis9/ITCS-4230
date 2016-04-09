@@ -23,7 +23,7 @@ public class FireAI : MonoBehaviour, ITakeDamage
 	public Projectile WeaponToGive;
 	public GameObject DestroyedEffect;
 	public AudioClip DestroySound;
-
+	public Animator Animator;
 
 
 	private CharacterController2D _controller;
@@ -59,6 +59,7 @@ public class FireAI : MonoBehaviour, ITakeDamage
 		//Debug.Log ("I see you");
 		//_fire = FireRate;
 
+		Animator.SetFloat("Speed", Mathf.Abs(_controller.Velocity.x));
 
 		_controller.SetHorizontalForce(0f);
 		if ((_wait -= Time.deltaTime) > 0)

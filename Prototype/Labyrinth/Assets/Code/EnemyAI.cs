@@ -25,7 +25,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
 	public Projectile WeaponToGive;
 	public GameObject DestroyedEffect;
 	public AudioClip DestroySound;
-
+	public Animator Animator;
 
 
     private CharacterController2D _controller;
@@ -56,6 +56,7 @@ public class EnemyAI : MonoBehaviour, ITakeDamage
             _controller.SetHorizontalForce(_direction.x * Speed);
             return;
         }
+		Animator.SetFloat("Speed", Mathf.Abs(_controller.Velocity.x));
 
         //_controller.SetHorizontalForce(0f);
 		
